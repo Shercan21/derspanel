@@ -1,26 +1,25 @@
-const CACHE_NAME = "derspanel-v1"; // Tek isim
+const CACHE_NAME = "derspanel-v1";
 
-// Cache’e alınacak dosyalar
 const urlsToCache = [
-  "./",
-  "./index.html",
-  "./icon-192.png",
-  "./icon-512.png",
-  "./icon-180.png",
-  "https://cdn.tailwindcss.com",
-  "https://unpkg.com/react@18/umd/react.production.min.js",
-  "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js",
-  "https://unpkg.com/@babel/standalone/babel.min.js"
+  "/",              // index.html
+  "/index.html",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/icon-180.png"
 ];
 
+// Install event
 self.addEventListener("install", event => {
+  console.log("Service Worker installing...");
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
+      console.log("Caching files...");
       return cache.addAll(urlsToCache);
     })
   );
 });
 
+// Fetch event
 self.addEventListener("fetch", event => {
   event.respondWith(
     caches.match(event.request).then(response => {
