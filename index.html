@@ -829,16 +829,15 @@
     ReactDOM.render(<DersPanel />, document.getElementById('root'));
 </script>
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(function(registration) {
-          console.log('Service Worker kayıtlı:', registration);
-        }).catch(function(error) {
-          console.log('Service Worker kaydı başarısız:', error);
-        });
-    });
-  }
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+  .then(reg => {
+    console.log("Service Worker kayıtlı:", reg);
+  })
+  .catch(err => console.error("Service Worker kaydı başarısız:", err));
+}
+</script>
+
 </script>
 <script>
 window.addEventListener("load", () => {
@@ -853,6 +852,7 @@ window.addEventListener("load", () => {
 
 </body>
 </html>
+
 
 
 
