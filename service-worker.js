@@ -1,9 +1,16 @@
-const CACHE_NAME = "derspanel-v1";
-const CACHE_NAME = "ders-v1";
+const CACHE_NAME = "derspanel-v1"; // Tek isim
 
+// Cache’e alınacak dosyalar
 const urlsToCache = [
   "./",
-  "./index.html"
+  "./index.html",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./icon-180.png",
+  "https://cdn.tailwindcss.com",
+  "https://unpkg.com/react@18/umd/react.production.min.js",
+  "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js",
+  "https://unpkg.com/@babel/standalone/babel.min.js"
 ];
 
 self.addEventListener("install", event => {
