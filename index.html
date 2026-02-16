@@ -87,8 +87,12 @@
 
     const DersPanel = () => {
         const [showMoney, setShowMoney] = useState(true);
+        const [dersFiltre, setDersFiltre] = useState("tum");
+
         const [activeTab, setActiveTab] = useState('ogrenciler');
         const [ogrenciler, setOgrenciler] = useState([]);
+        const [seciliOgrenci, setSeciliOgrenci] = useState("tum");
+
         const [dersler, setDersler] = useState([]);
         const [odevler, setOdevler] = useState([]);
         const [editingId, setEditingId] = useState(null);
@@ -347,6 +351,20 @@
                         <div className="bg-white rounded-xl shadow-lg p-4">
                             <div className="flex justify-between items-center mb-4">
                                 <h2 className="text-xl font-bold text-gray-800">Dersler ({dersler.length})</h2>
+                                <select
+                                        value={seciliOgrenci}
+                                        onChange={(e) => setSeciliOgrenci(e.target.value)}
+                                        className="border border-gray-300 rounded px-2 py-1 text-sm"
+                                        >
+                                        <option value="tum">Tüm Öğrenciler</option>
+                                        {ogrenciler.map(ogrenci => (
+                                            <option key={ogrenci.id} value={ogrenci.id}>
+                                            {ogrenci.ad}
+                                            </option>
+                                        ))}
+                                        </select>
+
+                                </div>
                                 <button
                                     onClick={() => {
                                         if (ogrenciler.length === 0) {
@@ -364,7 +382,16 @@
                             </div>
                             
                             <div className="space-y-3">
-                                {dersler.sort((a, b) => new Date(b.tarih + ' ' + b.saat) - new Date(a.tarih + ' ' + a.saat)).map(ders => (
+                                 className="space-y-3">
+                                {dersler
+                                    .filter(ders => {
+                                        if (seciliOgrenci === "tum") return true;
+                                        return parseInt(ders.ogrenciId) === parseInt(seciliOgrenci);
+                                    })
+                                    .sort((a, b) => new Date(b.tarih + ' ' + b.saat) - new Date(a.tarih + ' ' + a.saat))
+                                    .map(ders => (
+
+                                    
                                     <div key={ders.id} className={`border rounded-lg p-3 ${
                                         ders.odendi === true ? 'border-green-300 bg-green-50' : 'border-gray-200 bg-white'
                                     }`}>
@@ -823,5 +850,6 @@ window.addEventListener("load", () => {
 
 </body>
 </html>
+
 
 
