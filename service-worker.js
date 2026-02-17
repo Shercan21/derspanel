@@ -1,29 +1,43 @@
-const CACHE_NAME = "derspanel-v1";
+const CACHE_NAME = "derspanel-v2";
 
 const urlsToCache = [
-  "/",              // index.html
-  "/index.html",
-  "/icon-192.png",
-  "/icon-512.png",
-  "/icon-180.png"
+  "/derspanel/",
+  "/derspanel/index.html",
+  "/derspanel/icon-192.png",
+  "/derspanel/icon-512.png",
+  "/derspanel/icon-180.png"
 ];
 
-// Install event
 self.addEventListener("install", event => {
-  console.log("Service Worker installing...");
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log("Caching files...");
       return cache.addAll(urlsToCache);
     })
   );
 });
 
-// Fetch event
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
+    )
+  );
+  self.clients.claim();
+});
+
 self.addEventListener("fetch", event => {
   event.respondWith(
     caches.match(event.request).then(response => {
       return response || fetch(event.request);
+    }).catch(() => {
+      return caches.match("/derspanel/index.html");
     })
   );
 });
