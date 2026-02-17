@@ -830,7 +830,8 @@
 </script>
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js')
+  navigator.serviceWorker.register('/derspanel/service-worker.js')
+
   .then(reg => {
     console.log("Service Worker kayıtlı:", reg);
   })
@@ -852,6 +853,7 @@ window.addEventListener("load", () => {
 
 </body>
 </html>
+
 
 
 
